@@ -1,0 +1,9 @@
+S:\Documents\School\MECH 423\Lab-1\Mech423Lab1\bin\Debug\Mech423Lab1.exe.config
+S:\Documents\School\MECH 423\Lab-1\Mech423Lab1\bin\Debug\Mech423Lab1.exe
+S:\Documents\School\MECH 423\Lab-1\Mech423Lab1\bin\Debug\Mech423Lab1.pdb
+S:\Documents\School\MECH 423\Lab-1\Mech423Lab1\obj\Debug\Mech423Lab1.csprojResolveAssemblyReference.cache
+S:\Documents\School\MECH 423\Lab-1\Mech423Lab1\obj\Debug\Mech423Lab1.Properties.Resources.resources
+S:\Documents\School\MECH 423\Lab-1\Mech423Lab1\obj\Debug\Mech423Lab1.csproj.GenerateResource.Cache
+S:\Documents\School\MECH 423\Lab-1\Mech423Lab1\obj\Debug\Mech423Lab1.csproj.CoreCompileInputs.cache
+S:\Documents\School\MECH 423\Lab-1\Mech423Lab1\obj\Debug\Mech423Lab1.exe
+S:\Documents\School\MECH 423\Lab-1\Mech423Lab1\obj\Debug\Mech423Lab1.pdb
