@@ -1,0 +1,23 @@
+C:\Users\Nate\source\repos\WindowsFormsApp2\WindowsFormsApp2\bin\Debug\WindowsFormsApp2.exe.config
+C:\Users\Nate\source\repos\WindowsFormsApp2\WindowsFormsApp2\bin\Debug\WindowsFormsApp2.exe
+C:\Users\Nate\source\repos\WindowsFormsApp2\WindowsFormsApp2\bin\Debug\WindowsFormsApp2.pdb
+C:\Users\Nate\source\repos\WindowsFormsApp2\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.csprojResolveAssemblyReference.cache
+C:\Users\Nate\source\repos\WindowsFormsApp2\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.Form1.resources
+C:\Users\Nate\source\repos\WindowsFormsApp2\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.Properties.Resources.resources
+C:\Users\Nate\source\repos\WindowsFormsApp2\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.csproj.GenerateResource.Cache
+C:\Users\Nate\source\repos\WindowsFormsApp2\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.csproj.CoreCompileInputs.cache
+C:\Users\Nate\source\repos\WindowsFormsApp2\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.exe
+C:\Users\Nate\source\repos\WindowsFormsApp2\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.pdb
+S:\One Drive\OneDrive\MECH 423 Lab 1\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.csprojResolveAssemblyReference.cache
+S:\One Drive\OneDrive\MECH 423 Lab 1\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.exe
+S:\One Drive\OneDrive\MECH 423 Lab 1\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.pdb
+C:\Users\Nate\Desktop\New folder (2)\MECH 423 Lab 1\WindowsFormsApp2\bin\Debug\WindowsFormsApp2.exe.config
+C:\Users\Nate\Desktop\New folder (2)\MECH 423 Lab 1\WindowsFormsApp2\bin\Debug\WindowsFormsApp2.exe
+C:\Users\Nate\Desktop\New folder (2)\MECH 423 Lab 1\WindowsFormsApp2\bin\Debug\WindowsFormsApp2.pdb
+C:\Users\Nate\Desktop\New folder (2)\MECH 423 Lab 1\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.csprojResolveAssemblyReference.cache
+C:\Users\Nate\Desktop\New folder (2)\MECH 423 Lab 1\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.Form1.resources
+C:\Users\Nate\Desktop\New folder (2)\MECH 423 Lab 1\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.Properties.Resources.resources
+C:\Users\Nate\Desktop\New folder (2)\MECH 423 Lab 1\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.csproj.GenerateResource.Cache
+C:\Users\Nate\Desktop\New folder (2)\MECH 423 Lab 1\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.csproj.CoreCompileInputs.cache
+C:\Users\Nate\Desktop\New folder (2)\MECH 423 Lab 1\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.exe
+C:\Users\Nate\Desktop\New folder (2)\MECH 423 Lab 1\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.pdb
