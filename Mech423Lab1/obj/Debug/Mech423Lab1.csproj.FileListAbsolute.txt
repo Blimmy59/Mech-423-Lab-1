@@ -7,3 +7,13 @@ S:\Documents\School\MECH 423\Lab-1\Mech423Lab1\obj\Debug\Mech423Lab1.csproj.Gene
 S:\Documents\School\MECH 423\Lab-1\Mech423Lab1\obj\Debug\Mech423Lab1.csproj.CoreCompileInputs.cache
 S:\Documents\School\MECH 423\Lab-1\Mech423Lab1\obj\Debug\Mech423Lab1.exe
 S:\Documents\School\MECH 423\Lab-1\Mech423Lab1\obj\Debug\Mech423Lab1.pdb
+S:\Documents\GitHub\Mech-423-Lab-1\Mech423Lab1\bin\Debug\Mech423Lab1.exe.config
+S:\Documents\GitHub\Mech-423-Lab-1\Mech423Lab1\bin\Debug\Mech423Lab1.exe
+S:\Documents\GitHub\Mech-423-Lab-1\Mech423Lab1\bin\Debug\Mech423Lab1.pdb
+S:\Documents\GitHub\Mech-423-Lab-1\Mech423Lab1\obj\Debug\Mech423Lab1.csprojResolveAssemblyReference.cache
+S:\Documents\GitHub\Mech-423-Lab-1\Mech423Lab1\obj\Debug\Mech423Lab1.Properties.Resources.resources
+S:\Documents\GitHub\Mech-423-Lab-1\Mech423Lab1\obj\Debug\Mech423Lab1.csproj.GenerateResource.Cache
+S:\Documents\GitHub\Mech-423-Lab-1\Mech423Lab1\obj\Debug\Mech423Lab1.csproj.CoreCompileInputs.cache
+S:\Documents\GitHub\Mech-423-Lab-1\Mech423Lab1\obj\Debug\Mech423Lab1.exe
+S:\Documents\GitHub\Mech-423-Lab-1\Mech423Lab1\obj\Debug\Mech423Lab1.pdb
+S:\Documents\GitHub\Mech-423-Lab-1\Mech423Lab1\obj\Debug\WindowsFormsApp2.Form1.resources
