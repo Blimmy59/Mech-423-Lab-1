@@ -22,11 +22,14 @@ namespace WindowsFormsApp2
         ConcurrentQueue<int> currentY = new ConcurrentQueue<int>();
         ConcurrentQueue<int> currentZ = new ConcurrentQueue<int>();
 
-        ConcurrentQueue<string> punchResult = new ConcurrentQueue<string>();
-
         Queue<int> xData = new Queue<int>();
         Queue<int> yData = new Queue<int>();
         Queue<int> zData = new Queue<int>();
+
+        Queue<double> xDataVar = new Queue<double>();
+        Queue<double> yDataVar = new Queue<double>();
+        Queue<double> zDataVar = new Queue<double>();
+
 
         public Form1()
         {
@@ -104,9 +107,9 @@ namespace WindowsFormsApp2
                     textBoxWorkerYQueueLength.Text = currentY.Count().ToString();
                     textBoxWorkerZQueueLength.Text = currentZ.Count().ToString();
 
-
-                    punchResult.TryDequeue(out string currentResult);
-                    textBoxPunchResult.Text = currentResult;
+                    textBoxXSTDDev.Text = Math.Sqrt(xDataVar.Sum() / queueSetLength).ToString();
+                    textBoxYSTDDev.Text = Math.Sqrt(yDataVar.Sum() / queueSetLength).ToString();
+                    textBoxZSTDDev.Text = Math.Sqrt(zDataVar.Sum() / queueSetLength).ToString();
                 }
 
                 //Sorts dataQueue into xData, yData, and zData. Limits these queues to queueSetLength
@@ -132,6 +135,8 @@ namespace WindowsFormsApp2
                         {
                             xData.Enqueue(currentByte);
                             currentX.Enqueue(currentByte);
+                            double temp1 = (currentByte - double.Parse(textboxAverageX.Text));
+                            xDataVar.Enqueue(temp1*temp1);
                             textboxXvalue.Text = currentByte.ToString();
                             dataChart.Series["X"].Points.DataBindY(xData);
 
@@ -152,6 +157,10 @@ namespace WindowsFormsApp2
                         {
                             yData.Enqueue(currentByte);
                             currentY.Enqueue(currentByte);
+
+                            double temp1 = (currentByte - double.Parse(textboxAverageY.Text));
+                            yDataVar.Enqueue(temp1 * temp1);
+
                             textboxYvalue.Text = currentByte.ToString();
                             dataChart.Series["Y"].Points.DataBindY(yData);
 
@@ -173,6 +182,10 @@ namespace WindowsFormsApp2
                         {
                             zData.Enqueue(currentByte);
                             currentZ.Enqueue(currentByte);
+
+                            double temp1 = (currentByte - double.Parse(textboxAverageZ.Text));
+                            zDataVar.Enqueue(temp1 * temp1);
+
                             textboxZvalue.Text = currentByte.ToString();
                             dataChart.Series["Z"].Points.DataBindY(zData);
 
@@ -244,48 +257,76 @@ namespace WindowsFormsApp2
 
         private void backgroundWorker1_DoWork_1(object sender, DoWorkEventArgs e)
         {
-            Stopwatch time = new Stopwatch();
-            int X = 1;
-            int Y = 1;
-            int Z = 1;
             while (gumStick.IsOpen)
             {
+                while ((currentX.Count > 4) && (currentY.Count > 4) && (currentZ.Count > 4)){
+                    Beginning:
+                    string punchResult = "Try Me!";
 
-                currentX.TryDequeue(out X);
-                currentY.TryDequeue(out Y);
-                currentZ.TryDequeue(out Z);
+                    currentX.TryDequeue(out int X);
+                    currentY.TryDequeue(out int Y);
+                    currentZ.TryDequeue(out int Z);
 
-                if (X > 190)
-                {
-
-                    time.Start();
-                    while(time.Elapsed < TimeSpan.FromSeconds(1))
+                    if (X > 200)
                     {
-                        if (Y > 200)
+                        var startTime = DateTime.UtcNow;
+                        while (DateTime.UtcNow - startTime < TimeSpan.FromSeconds(2))
                         {
-                            while(time.Elapsed < TimeSpan.FromSeconds(2))
+                            currentX.TryDequeue(out X);
+                            currentY.TryDequeue(out Y);
+                            currentZ.TryDequeue(out Z);
+                            if (Y > 200)
                             {
-                                if (Z > 200)
+                                punchResult = "Frisbee Throw!!!";
+                                goto Display;
+                            }
+                        }
+                    }
+
+                    if (Z > 200)
+                    {
+                        var startTime = DateTime.UtcNow;
+                        while (DateTime.UtcNow - startTime < TimeSpan.FromSeconds(2))
+                        {
+                            currentX.TryDequeue(out X);
+                            currentY.TryDequeue(out Y);
+                            currentZ.TryDequeue(out Z);
+                            if (Y > 200)
+                            {
+                                startTime = DateTime.UtcNow;
+                                while (DateTime.UtcNow - startTime < TimeSpan.FromSeconds(4))
                                 {
-                                    while (time.Elapsed < TimeSpan.FromSeconds(3))
+                                    currentX.TryDequeue(out X);
+                                    currentY.TryDequeue(out Y);
+                                    currentZ.TryDequeue(out Z);
+                                    if (Y < 60)
                                     {
-                                        punchResult.Enqueue("Right Hook!!!");
+                                        punchResult = "Wave";
+                                        goto Display;
                                     }
                                 }
                             }
                         }
+                        punchResult = "FreeFall";
+                        goto Display;
                     }
-                    while(time.Elapsed < TimeSpan.FromSeconds(2))
-                    {
-                        punchResult.Enqueue("Lame Punch...");
-                    }
-                    time.Reset();
-                }
-                if (punchResult.Count > 0)
-                {
-                    punchResult.TryDequeue(out string dump);
+                    goto Beginning;
+
+                    Display:
+                    backgroundWorker.ReportProgress(10, punchResult);
+                    Thread.Sleep(1000);
+                    backgroundWorker.ReportProgress(10, "waiting");
+                    goto Beginning;
                 }
             }
         }
+
+        private void backgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            if (e.UserState != null)
+            {
+                textBoxPunchResult.Text = e.UserState.ToString();
+            }
+        }
     }
-}
+ }
