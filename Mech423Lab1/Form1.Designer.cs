@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -77,6 +77,14 @@
             this.textBoxZMax = new System.Windows.Forms.TextBox();
             this.textBoxYMax = new System.Windows.Forms.TextBox();
             this.textBoxXMax = new System.Windows.Forms.TextBox();
+            this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
+            this.textBoxWorkerYQueueLength = new System.Windows.Forms.TextBox();
+            this.textBoxWorkerZQueueLength = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.textBoxWorkerXQueueLength = new System.Windows.Forms.TextBox();
+            this.textBoxPunchResult = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataChart)).BeginInit();
             this.SuspendLayout();
             // 
@@ -261,27 +269,27 @@
             this.dataChart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea2.Name = "ChartArea1";
-            this.dataChart.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.dataChart.Legends.Add(legend2);
+            chartArea1.Name = "ChartArea1";
+            this.dataChart.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.dataChart.Legends.Add(legend1);
             this.dataChart.Location = new System.Drawing.Point(350, 18);
             this.dataChart.Name = "dataChart";
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series4.Legend = "Legend1";
-            series4.Name = "X";
-            series5.ChartArea = "ChartArea1";
-            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series5.Legend = "Legend1";
-            series5.Name = "Y";
-            series6.ChartArea = "ChartArea1";
-            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series6.Legend = "Legend1";
-            series6.Name = "Z";
-            this.dataChart.Series.Add(series4);
-            this.dataChart.Series.Add(series5);
-            this.dataChart.Series.Add(series6);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series1.Legend = "Legend1";
+            series1.Name = "X";
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series2.Legend = "Legend1";
+            series2.Name = "Y";
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series3.Legend = "Legend1";
+            series3.Name = "Z";
+            this.dataChart.Series.Add(series1);
+            this.dataChart.Series.Add(series2);
+            this.dataChart.Series.Add(series3);
             this.dataChart.Size = new System.Drawing.Size(623, 321);
             this.dataChart.TabIndex = 18;
             this.dataChart.Text = "chart";
@@ -478,11 +486,84 @@
             this.textBoxXMax.Size = new System.Drawing.Size(52, 20);
             this.textBoxXMax.TabIndex = 37;
             // 
+            // backgroundWorker
+            // 
+            this.backgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork_1);
+            // 
+            // textBoxWorkerYQueueLength
+            // 
+            this.textBoxWorkerYQueueLength.Location = new System.Drawing.Point(184, 242);
+            this.textBoxWorkerYQueueLength.Margin = new System.Windows.Forms.Padding(2);
+            this.textBoxWorkerYQueueLength.Name = "textBoxWorkerYQueueLength";
+            this.textBoxWorkerYQueueLength.Size = new System.Drawing.Size(52, 20);
+            this.textBoxWorkerYQueueLength.TabIndex = 46;
+            // 
+            // textBoxWorkerZQueueLength
+            // 
+            this.textBoxWorkerZQueueLength.Location = new System.Drawing.Point(184, 266);
+            this.textBoxWorkerZQueueLength.Margin = new System.Windows.Forms.Padding(2);
+            this.textBoxWorkerZQueueLength.Name = "textBoxWorkerZQueueLength";
+            this.textBoxWorkerZQueueLength.Size = new System.Drawing.Size(52, 20);
+            this.textBoxWorkerZQueueLength.TabIndex = 45;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(57, 245);
+            this.label17.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(123, 13);
+            this.label17.TabIndex = 44;
+            this.label17.Text = "Worker Y Queue Length";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(57, 269);
+            this.label18.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(123, 13);
+            this.label18.TabIndex = 43;
+            this.label18.Text = "Worker Z Queue Length";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(57, 221);
+            this.label19.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(123, 13);
+            this.label19.TabIndex = 42;
+            this.label19.Text = "Worker X Queue Length";
+            // 
+            // textBoxWorkerXQueueLength
+            // 
+            this.textBoxWorkerXQueueLength.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.textBoxWorkerXQueueLength.Location = new System.Drawing.Point(184, 218);
+            this.textBoxWorkerXQueueLength.Margin = new System.Windows.Forms.Padding(2);
+            this.textBoxWorkerXQueueLength.Name = "textBoxWorkerXQueueLength";
+            this.textBoxWorkerXQueueLength.Size = new System.Drawing.Size(52, 20);
+            this.textBoxWorkerXQueueLength.TabIndex = 41;
+            // 
+            // textBoxPunchResult
+            // 
+            this.textBoxPunchResult.Location = new System.Drawing.Point(214, 319);
+            this.textBoxPunchResult.Name = "textBoxPunchResult";
+            this.textBoxPunchResult.Size = new System.Drawing.Size(100, 20);
+            this.textBoxPunchResult.TabIndex = 47;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(985, 351);
+            this.Controls.Add(this.textBoxPunchResult);
+            this.Controls.Add(this.textBoxWorkerYQueueLength);
+            this.Controls.Add(this.textBoxWorkerZQueueLength);
+            this.Controls.Add(this.label17);
+            this.Controls.Add(this.label18);
+            this.Controls.Add(this.label19);
+            this.Controls.Add(this.textBoxWorkerXQueueLength);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.textBoxZMax);
             this.Controls.Add(this.textBoxYMax);
@@ -579,6 +660,14 @@
         private System.Windows.Forms.TextBox textBoxZMax;
         private System.Windows.Forms.TextBox textBoxYMax;
         private System.Windows.Forms.TextBox textBoxXMax;
+        private System.ComponentModel.BackgroundWorker backgroundWorker;
+        private System.Windows.Forms.TextBox textBoxWorkerYQueueLength;
+        private System.Windows.Forms.TextBox textBoxWorkerZQueueLength;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.TextBox textBoxWorkerXQueueLength;
+        private System.Windows.Forms.TextBox textBoxPunchResult;
     }
 }
 

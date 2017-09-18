@@ -9,26 +9,35 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Ports;
 using System.Collections.Concurrent;
+using System.Threading;
+using System.Diagnostics;
 
 namespace WindowsFormsApp2
 {
     public partial class Form1 : Form
     {
         ConcurrentQueue<int> dataQueue = new ConcurrentQueue<int>();
+
+        ConcurrentQueue<int> currentX = new ConcurrentQueue<int>();
+        ConcurrentQueue<int> currentY = new ConcurrentQueue<int>();
+        ConcurrentQueue<int> currentZ = new ConcurrentQueue<int>();
+
+        ConcurrentQueue<string> punchResult = new ConcurrentQueue<string>();
+
         Queue<int> xData = new Queue<int>();
         Queue<int> yData = new Queue<int>();
         Queue<int> zData = new Queue<int>();
 
         public Form1()
         {
+            
             InitializeComponent();
         }
 
         //Com selection dropdown
         private void comSelectionBox_DropDown(object sender, EventArgs e)
         {
-            string[] comPorts = SerialPort.GetPortNames();
-            comSelectionBox.DataSource = comPorts;
+            comSelectionBox.DataSource = SerialPort.GetPortNames();
         }
 
         //Connect/Disconnect Button
@@ -46,6 +55,7 @@ namespace WindowsFormsApp2
                     gumStick.PortName = comSelectionBox.SelectedItem.ToString();
                     gumStick.Open();
                     connectDisconnect.Text = "Disconnect";
+                    backgroundWorker.RunWorkerAsync();
                 }
             }
             else
@@ -54,7 +64,7 @@ namespace WindowsFormsApp2
             }
         }
 
-        //Worker timer
+        //timer
         private void timer1_Tick(object sender, EventArgs e)
         {
             if (gumStick.IsOpen)
@@ -67,15 +77,15 @@ namespace WindowsFormsApp2
                 int queueSetLength = int.Parse(textboxQueueSetLength.Text);
                 
                 //Buffer and Concurrent Queue Display
-                    textboxSerialBufferSize.Text = gumStick.BytesToRead.ToString();
-                    textboxQueueLength.Text = dataQueue.Count().ToString();
+                textboxSerialBufferSize.Text = gumStick.BytesToRead.ToString();
+                textboxQueueLength.Text = dataQueue.Count().ToString();
 
                 //X Y and Z Queue display
-                    textboxXBufferSize.Text = xData.Count().ToString();
-                    textboxYBufferSize.Text = yData.Count().ToString();
-                    textboxZBufferSize.Text = zData.Count().ToString();
+                textboxXBufferSize.Text = xData.Count().ToString();
+                textboxYBufferSize.Text = yData.Count().ToString();
+                textboxZBufferSize.Text = zData.Count().ToString();
 
-             //Displays the average, max, and min of accelerometer values stored in xData, yData, and zData
+                //Displays the average, max, and min of accelerometer values stored in xData, yData, and zData
                 if ((xData.Count > 0) && (yData.Count > 0) && (yData.Count > 0))
                 {
                     textboxAverageX.Text = xData.Average().ToString();
@@ -84,11 +94,19 @@ namespace WindowsFormsApp2
 
                     textBoxXMax.Text = xData.Max().ToString();
                     textBoxYMax.Text = yData.Max().ToString();
-                    textBoxZMax.Text = yData.Max().ToString();
+                    textBoxZMax.Text = zData.Max().ToString();
 
                     textBoxXMin.Text = xData.Min().ToString();
                     textBoxYMin.Text = yData.Min().ToString();
-                    textBoxZMin.Text = yData.Min().ToString();
+                    textBoxZMin.Text = zData.Min().ToString();
+
+                    textBoxWorkerXQueueLength.Text = currentX.Count().ToString();
+                    textBoxWorkerYQueueLength.Text = currentY.Count().ToString();
+                    textBoxWorkerZQueueLength.Text = currentZ.Count().ToString();
+
+
+                    punchResult.TryDequeue(out string currentResult);
+                    textBoxPunchResult.Text = currentResult;
                 }
 
                 //Sorts dataQueue into xData, yData, and zData. Limits these queues to queueSetLength
@@ -99,6 +117,9 @@ namespace WindowsFormsApp2
                     int xdir = 1;
                     int ydir = 1;
                     int zdir = 1;
+                    int positiveXFlag = 0;
+                    int positiveYFlag = 0;
+                    int positiveZFlag = 0;
 
                     if (dataQueue.TryDequeue(out currentByte) == true)
                     {
@@ -110,26 +131,19 @@ namespace WindowsFormsApp2
                         else if (dataByteState == 1)
                         {
                             xData.Enqueue(currentByte);
+                            currentX.Enqueue(currentByte);
                             textboxXvalue.Text = currentByte.ToString();
                             dataChart.Series["X"].Points.DataBindY(xData);
 
-                            xdir = 1;
+                            if (currentByte > 200) { positiveXFlag = 1; }
 
-                            if (currentByte > 140)
-                            {
-                                xdir = 2;
-                            }
-                            else if (currentByte < 110)
-                            {
-                                xdir = 0;
-                            }
+                            xdir = 1;
+                            if (currentByte > 140)      {xdir = 2;}
+                            else if (currentByte < 110) {xdir = 0;}
 
                             textBoxXdir.Text = xdir.ToString();
 
-                            if (xData.Count > queueSetLength)
-                            {
-                                int dump = xData.Dequeue();
-                            }
+                            if (xData.Count > queueSetLength)   {xData.Dequeue();}
 
                             dataByteState = 2;
                         }
@@ -137,26 +151,20 @@ namespace WindowsFormsApp2
                         else if (dataByteState == 2)
                         {
                             yData.Enqueue(currentByte);
+                            currentY.Enqueue(currentByte);
                             textboxYvalue.Text = currentByte.ToString();
                             dataChart.Series["Y"].Points.DataBindY(yData);
 
+                            if (currentByte > 200) { positiveYFlag = 1; }
+
                             ydir = 1;
 
-                            if (currentByte > 140)
-                            {
-                                ydir = 2;
-                            }
-                            else if (currentByte < 110)
-                            {
-                                ydir = 0;
-                            }
+                            if (currentByte > 140)      {ydir = 2;}
+                            else if (currentByte < 110) {ydir = 0;}
 
                             textBoxYdir.Text = ydir.ToString();
 
-                            if (yData.Count > queueSetLength)
-                            {
-                                int dump = yData.Dequeue();
-                            }
+                            if (yData.Count > queueSetLength)   {yData.Dequeue();}
 
                             dataByteState = 3;
                         }
@@ -164,54 +172,32 @@ namespace WindowsFormsApp2
                         else if (dataByteState == 3)
                         {
                             zData.Enqueue(currentByte);
+                            currentZ.Enqueue(currentByte);
                             textboxZvalue.Text = currentByte.ToString();
                             dataChart.Series["Z"].Points.DataBindY(zData);
 
+                            if (currentByte > 200) { positiveZFlag = 1; }
+
                             zdir = 1;
 
-                            if (currentByte > 140)
-                            {
-                                zdir = 2;
-                            }
-                            else if (currentByte < 110)
-                            {
-                                zdir = 0;
-                            }
+                            if (currentByte > 140)      {zdir = 2;}
+                            else if (currentByte < 110) {zdir = 0;}
 
                             textBoxZdir.Text = zdir.ToString();
 
-                            if (zData.Count > queueSetLength)
-                            {
-                                int dump = zData.Dequeue();
-                            }
+                            if (zData.Count > queueSetLength)   {zData.Dequeue();}
 
                             dataByteState = 0;
                         }
 
-                        if ((xdir == 1) && (ydir == 1) && (zdir == 2))
-                        {
-                            textBoxOrientation.Text = "Flat";
-                        }
-                        else if ((xdir == 1) && (ydir == 0) && (zdir == 1))
-                        {
-                            textBoxOrientation.Text = "Tilted Left";
-                        }
-                        else if ((xdir == 1) && (ydir == 2) && (zdir == 1))
-                        {
-                            textBoxOrientation.Text = "Tilted Right";
-                        }
-                        else if ((xdir == 0) && (ydir == 1) && (zdir == 1))
-                        {
-                            textBoxOrientation.Text = "Tilted Forward";
-                        }
-                        else if ((xdir == 2) && (ydir == 1) && (zdir == 1))
-                        {
-                            textBoxOrientation.Text = "Tilted Back";
-                        }
-                        else if ((xdir == 1) && (ydir == 1) && (zdir == 0))
-                        {
-                            textBoxOrientation.Text = "Upside Down";
-                        }
+                        if ((positiveXFlag == 1) && (positiveYFlag == 1) && (positiveZFlag == 1)) { }
+
+                        if ((xdir == 1) && (ydir == 1) && (zdir == 2))      {textBoxOrientation.Text = "Flat";}
+                        else if ((xdir == 1) && (ydir == 0) && (zdir == 1)) {textBoxOrientation.Text = "Tilted Left";}
+                        else if ((xdir == 1) && (ydir == 2) && (zdir == 1)) {textBoxOrientation.Text = "Tilted Right";}
+                        else if ((xdir == 0) && (ydir == 1) && (zdir == 1)) {textBoxOrientation.Text = "Tilted Forward";}
+                        else if ((xdir == 2) && (ydir == 1) && (zdir == 1)) {textBoxOrientation.Text = "Tilted Back";}
+                        else if ((xdir == 1) && (ydir == 1) && (zdir == 0)) {textBoxOrientation.Text = "Upside Down";}
                     }
                 }
             }
@@ -236,29 +222,15 @@ namespace WindowsFormsApp2
             yData.Clear();
             zData.Clear();
 
-            if (gumStick.IsOpen)
-            {
-                gumStick.DiscardInBuffer();
-            }
-            else
-            {
-                textboxSerialBufferSize.Text = 0.ToString();
-            }
+            if (gumStick.IsOpen)    {gumStick.DiscardInBuffer();}
+            else{textboxSerialBufferSize.Text = 0.ToString();}
 
             ConcurrentQueue<int> dataQueue = new ConcurrentQueue<int>();
 
-            int queueLength = dataQueue.Count();
-            textboxQueueLength.Text = queueLength.ToString();
-
-            int xQueLength = xData.Count();
-            textboxXBufferSize.Text = xQueLength.ToString();
-
-            int yQueLength = yData.Count();
-            textboxYBufferSize.Text = yQueLength.ToString();
-
-            int zQueLength = zData.Count();
-            textboxZBufferSize.Text = zQueLength.ToString();
-
+            textboxQueueLength.Text = dataQueue.Count().ToString();
+            textboxXBufferSize.Text = xData.Count().ToString();
+            textboxYBufferSize.Text = yData.Count().ToString();
+            textboxZBufferSize.Text = zData.Count().ToString();
             textboxAverageX.Text = "0";
             textboxAverageY.Text = "0";
             textboxAverageZ.Text = "0";
@@ -267,9 +239,52 @@ namespace WindowsFormsApp2
         //Form Exit Cleanup
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (gumStick.IsOpen)
+            if (gumStick.IsOpen){gumStick.Close();}
+        }
+
+        private void backgroundWorker1_DoWork_1(object sender, DoWorkEventArgs e)
+        {
+            Stopwatch time = new Stopwatch();
+            int X = 1;
+            int Y = 1;
+            int Z = 1;
+            while (gumStick.IsOpen)
             {
-                gumStick.Close();
+
+                currentX.TryDequeue(out X);
+                currentY.TryDequeue(out Y);
+                currentZ.TryDequeue(out Z);
+
+                if (X > 190)
+                {
+
+                    time.Start();
+                    while(time.Elapsed < TimeSpan.FromSeconds(1))
+                    {
+                        if (Y > 200)
+                        {
+                            while(time.Elapsed < TimeSpan.FromSeconds(2))
+                            {
+                                if (Z > 200)
+                                {
+                                    while (time.Elapsed < TimeSpan.FromSeconds(3))
+                                    {
+                                        punchResult.Enqueue("Right Hook!!!");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    while(time.Elapsed < TimeSpan.FromSeconds(2))
+                    {
+                        punchResult.Enqueue("Lame Punch...");
+                    }
+                    time.Reset();
+                }
+                if (punchResult.Count > 0)
+                {
+                    punchResult.TryDequeue(out string dump);
+                }
             }
         }
     }
